@@ -106,6 +106,8 @@ if (isset($_GET['fcsid']) && isset($_GET['timestamp'])) {
 	$newtimestamp = strtotime("+60 minutes", $timestamp);
 	$auth_token = sha1($customer_id . '|' . $newtimestamp . '|' . $foxyshop_settings['api_key']);
 	$redirect_complete = 'https://' . $foxyshop_settings['domain'] . '/checkout?fc_auth_token=' . $auth_token . '&fc_customer_id=' . $customer_id . '&timestamp=' . $newtimestamp . '&fcsid=' . $fcsid;
+	
+	$redirect_complete = apply_filters( 'foxyshop_sso_redirect_complete', $redirect_complete );
 
 	wp_redirect($redirect_complete, 301);
 	die;
